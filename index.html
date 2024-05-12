@@ -42,7 +42,7 @@
         </div>
         <div class="input-group">
             <span class="input-group-text">&nbsp;&nbsp;&nbsp;Input Message&nbsp;&nbsp;&nbsp;</span>
-            <textarea autocomplete="off" placeholder="Enter Text" class="form-control" rows="4" aria-label="With textarea" name="input" id="input" onkeyup="convert_char()"></textarea>
+            <textarea autocomplete="off" placeholder="Enter Text" class="form-control" rows="4" aria-label="With textarea" name="input" id="input" oninput="convert_char()"></textarea>
         </div>
 
         <!-- <button onclick="calculate()">encode</button> | <button onclick="calculate(true)">decode</button>
@@ -264,7 +264,7 @@
             let ch = $(this).data("char").toLowerCase();
             console.log(ch);
             //$("#input").val($("#input").val() + ch).trigger("keyup");
-            $("#input").val($("#input").val() + ch).trigger("keyup");
+            $("#input").val($("#input").val() + ch).trigger("input");
         });
     </script>
 </body>
