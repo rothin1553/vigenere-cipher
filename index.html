@@ -50,7 +50,7 @@
 
         <div class="input-group mb-1">
             <span class="input-group-text" id="basic-addon3">Key Phrases&nbsp;<i class="fa fa-key"></i></span>
-            <input autocomplete="off" type="text" class="form-control" placeholder="Enter Key" name="key" id="key" value="defaultkey">
+            <input autocomplete="off" type="text" class="form-control" placeholder="Enter Key" name="key" id="key" value="defaultkey" oninput="update_query_param()">
         </div>
         <div class="input-group">
             <span class="input-group-text">Input<i class="fa fa-input-text"></i></span>
@@ -275,8 +275,48 @@
             $("#input").val($("#input").val() + ch).trigger("input");
         });
 
+        function addQueryParam(url, param, value) 
+        {
+            // Create URLSearchParams object
+            var params = new URLSearchParams(url.search); 
+
+            // Add or update the parameter
+            params.set(param, value); 
+
+            // Construct the new URL
+            var newUrl = url.origin + url.pathname + '?' + params.toString(); 
+
+            return newUrl;
+        }
+        // Update the URL without refreshing the page
+        function updateURL(newURL) 
+        {
+            if (window.history && window.history.pushState) {
+                window.history.pushState({}, '', newURL);
+            }
+        }
+        
+        function update_query_param()
+        {
+            let key = $("#key").val();
+            let new_param = addQueryParam(new URL(window.location.href), 'key_value', key);
+
+            updateURL(new_param);
+        }
+
         $(document).ready(function(){
             $('[data-bs-toggle="tooltip"]').tooltip();
+
+            // get key_value param from url 
+            var key_value = (new URL(location.href)).searchParams.get('key_value');
+            if(key_value) 
+            {
+                $("#key").val(key_value);
+            }
+            else
+            {
+                $("#key").trigger('input');
+            }
         });
         function move_text(id)
         {
